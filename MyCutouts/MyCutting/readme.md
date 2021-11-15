@@ -1,3 +1,5 @@
+## Результаты работы
+
 Исходное изображение | Результат 
 --- | --- 
 ![plot](https://github.com/EgorBa/Video-creative-platform/blob/master/MyCutouts/MyCutting/examples/1.jpg) | ![plot](https://github.com/EgorBa/Video-creative-platform/blob/master/MyCutouts/MyCutting/cutouts/cutout_1.png) 
