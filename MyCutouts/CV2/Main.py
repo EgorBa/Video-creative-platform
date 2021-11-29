@@ -1,6 +1,9 @@
 import cv2
 import numpy as np
 import datetime
+import os
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 
 def show(img, gray, mask, result):
@@ -13,11 +16,14 @@ def show(img, gray, mask, result):
 
 
 count = 100
-m = {'1': [], '2': [], '3': [], '4': [], '5': []}
+size = 11
+m = {}
+for i in range(1, size + 1):
+    m[str(i)] = []
 
 for j in range(count):
     print(j)
-    for i in range(1, 6):
+    for i in range(1, size + 1):
         filename = str(i)
         before = datetime.datetime.now()
         # load image

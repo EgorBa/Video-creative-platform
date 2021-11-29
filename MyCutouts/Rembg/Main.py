@@ -3,15 +3,20 @@ import numpy as np
 import io
 from PIL import ImageFile, Image
 import datetime
+import os
 
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
-count = 20
-m = {'1': [], '2': [], '3': [], '4': [], '5': []}
+count = 5
+size = 11
+m = {}
+for i in range(1, size + 1):
+    m[str(i)] = []
 
 for j in range(count):
     print(j)
-    for i in range(1, 6):
+    for i in range(1, size + 1):
         filename = str(i)
         before = datetime.datetime.now()
         f = np.fromfile("examples/" + filename + ".jpg")

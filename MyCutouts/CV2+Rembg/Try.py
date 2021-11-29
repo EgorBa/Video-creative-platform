@@ -4,6 +4,9 @@ import datetime
 from rembg.bg import remove
 import io
 from PIL import ImageFile, Image
+import os
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -16,12 +19,16 @@ def show(img, gray, mask, result):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-count = 20
-m = {'1': [], '2': [], '3': [], '4': [], '5': []}
+
+count = 1
+size = 11
+m = {}
+for i in range(1, size + 1):
+    m[str(i)] = []
 
 for j in range(count):
     print(j)
-    for i in range(1, 6):
+    for i in range(1, size + 1):
         filename = str(i)
         before = datetime.datetime.now()
         # load image
