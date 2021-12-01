@@ -10,6 +10,12 @@ import io
 from rembg.bg import remove
 from PIL import Image
 import psutil
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torchvision.transforms as transforms
+
+from Docker.MODNet.src.models.modnet import MODNet
 
 process = psutil.Process(os.getpid())  # for monitoring and debugging purposes
 
@@ -30,7 +36,7 @@ def process_api_request(body):
     start = time.time()
     try:
         if contains_people(input_path):
-            # TODO use MODNet
+            use_modnet(input_path, output_path)
             pass
         else:
             if contains_white_bg(input_path):
@@ -71,6 +77,48 @@ def use_rembg(input_path, output_path):
     img = Image.open(io.BytesIO(result)).convert("RGBA")
     img.save(output_path)
 
+def use_modnet(input_path, output_path):
+    ckpt_path = 'modnet_photographic_portrait_matting.ckpt'
+    ref_size = 512
+    im_transform = transforms.Compose(
+        [
+            transforms.ToTensor(),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+        ]
+    )
+    modnet = MODNet(backbone_pretrained=False)
+    modnet = nn.DataParallel(modnet).cuda()
+    modnet.load_state_dict(torch.load(ckpt_path))
+    modnet.eval()
+    im = Image.open(input_path)
+    im = np.asarray(im)
+    if len(im.shape) == 2:
+        im = im[:, :, None]
+    if im.shape[2] == 1:
+        im = np.repeat(im, 3, axis=2)
+    elif im.shape[2] == 4:
+        im = im[:, :, 0:3]
+    im = Image.fromarray(im)
+    im = im_transform(im)
+    im = im[None, :, :, :]
+    im_b, im_c, im_h, im_w = im.shape
+    if max(im_h, im_w) < ref_size or min(im_h, im_w) > ref_size:
+        if im_w >= im_h:
+            im_rh = ref_size
+            im_rw = int(im_w / im_h * ref_size)
+        elif im_w < im_h:
+            im_rw = ref_size
+            im_rh = int(im_h / im_w * ref_size)
+    else:
+        im_rh = im_h
+        im_rw = im_w
+    im_rw = im_rw - im_rw % 32
+    im_rh = im_rh - im_rh % 32
+    im = F.interpolate(im, size=(im_rh, im_rw), mode='area')
+    _, _, matte = modnet(im.cuda(), True)
+    matte = F.interpolate(matte, size=(im_h, im_w), mode='area')
+    matte = matte[0][0].data.cpu().numpy()
+    Image.fromarray(((matte * 255).astype('uint8')), mode='L').save(output_path)
 
 def contains_people(path):
     # TODO use tourchvision
