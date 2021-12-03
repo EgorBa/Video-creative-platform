@@ -14,6 +14,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.transforms as transforms
+import torchvision.transforms as T
+import torchvision
 
 from Docker.MODNet.src.models.modnet import MODNet
 
@@ -21,6 +23,7 @@ process = psutil.Process(os.getpid())  # for monitoring and debugging purposes
 
 config = yaml.safe_load(open("config.yml"))
 
+model_for_detection = None
 
 def process_api_request(body):
     """
@@ -77,6 +80,7 @@ def use_rembg(input_path, output_path):
     img = Image.open(io.BytesIO(result)).convert("RGBA")
     img.save(output_path)
 
+
 def use_modnet(input_path, output_path):
     ckpt_path = 'modnet_photographic_portrait_matting.ckpt'
     ref_size = 512
@@ -120,8 +124,23 @@ def use_modnet(input_path, output_path):
     matte = matte[0][0].data.cpu().numpy()
     Image.fromarray(((matte * 255).astype('uint8')), mode='L').save(output_path)
 
+
 def contains_people(path):
-    # TODO use tourchvision
+    global model_for_detection
+    if model_for_detection is not None:
+        img = Image.open(path)
+        transform = T.Compose([T.ToTensor()])
+        img = transform(img)
+        pred = model_for_detection([img])
+        labels = list(pred[0]['labels'].numpy())
+        scores = list(pred[0]['scores'].detach().numpy())
+        for i in range(len(labels)):
+            if labels[i] == 1 and scores[i] > 0.95:
+                return True
+    else:
+        model_for_detection = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
+        model_for_detection.eval()
+        return contains_people(path)
     return False
 
 
@@ -171,6 +190,10 @@ if __name__ == '__main__':
         'tools.encode.encoding': 'utf-8',
         'tools.response_headers.headers': [('Content-Type', 'application/json;encoding=utf-8')],
     })
+
+    global model_for_detection
+    model_for_detection = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
+    model_for_detection.eval()
 
     try:
         cherrypy.engine.start()
