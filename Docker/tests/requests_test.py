@@ -22,8 +22,9 @@ def health():
 
 if __name__ == '__main__':
 
-    for i in range(0, 10):
+    for i in range(1, 13):
         health()
-        resp = send_api_request("path to image", "path to result").json()
+        filename = str(i)
+        resp = send_api_request("examples/" + filename + ".jpg", "cutouts/cutout_" + filename + ".png").json()
         print(resp)
     health()

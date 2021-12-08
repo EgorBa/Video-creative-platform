@@ -8,7 +8,7 @@ import cv2
 import numpy as np
 import io
 from rembg.bg import remove
-from PIL import Image
+from PIL import Image, ImageFile
 import psutil
 import torch
 import torch.nn as nn
@@ -16,8 +16,14 @@ import torch.nn.functional as F
 import torchvision.transforms as transforms
 import torchvision.transforms as T
 import torchvision
+from pymatting import cutout
+from random import randrange
+from threading import Thread
 
 from Docker.MODNet.src.models.modnet import MODNet
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 process = psutil.Process(os.getpid())  # for monitoring and debugging purposes
 
@@ -43,7 +49,7 @@ def process_api_request(body):
             pass
         else:
             if contains_white_bg(input_path):
-                use_cv(input_path, output_path)
+                use_cv_and_rembg(input_path, output_path)
             else:
                 use_rembg(input_path, output_path)
     except Exception:
@@ -58,7 +64,15 @@ def process_api_request(body):
     return json.dumps(result)
 
 
-def use_cv(input_path, output_path):
+def clean(path):
+    th = Thread(target=os.remove, args=(path,))
+    th.start()
+
+
+def use_cv_and_rembg(input_path, output_path):
+    output_path_cv2 = str(randrange(1000)) + ".png"
+    output_path_rembg = str(randrange(1000)) + ".png"
+
     img = cv2.imread(input_path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     mask = cv2.threshold(gray, 250, 255, cv2.THRESH_BINARY)[1]
@@ -71,7 +85,20 @@ def use_cv(input_path, output_path):
     result = img.copy()
     result = cv2.cvtColor(result, cv2.COLOR_BGR2BGRA)
     result[:, :, 3] = mask
-    cv2.imwrite(output_path, result)
+    cv2.imwrite(output_path_cv2, result)
+
+    f = np.fromfile(input_path)
+    result = remove(f)
+    img = Image.open(io.BytesIO(result)).convert("RGBA")
+    img.save(output_path_rembg)
+
+    img1 = Image.open(output_path_cv2)
+    img2 = Image.open(output_path_rembg)
+    img1.paste(img2, (0, 0), mask=img2)
+    img1.save(output_path)
+
+    clean(output_path_rembg)
+    clean(output_path_cv2)
 
 
 def use_rembg(input_path, output_path):
@@ -82,6 +109,7 @@ def use_rembg(input_path, output_path):
 
 
 def use_modnet(input_path, output_path):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     ckpt_path = 'modnet_photographic_portrait_matting.ckpt'
     ref_size = 512
     im_transform = transforms.Compose(
@@ -91,8 +119,8 @@ def use_modnet(input_path, output_path):
         ]
     )
     modnet = MODNet(backbone_pretrained=False)
-    modnet = nn.DataParallel(modnet).cuda()
-    modnet.load_state_dict(torch.load(ckpt_path))
+    modnet = nn.DataParallel(modnet).to(device)
+    modnet.load_state_dict(torch.load(ckpt_path, map_location=device))
     modnet.eval()
     im = Image.open(input_path)
     im = np.asarray(im)
@@ -119,10 +147,13 @@ def use_modnet(input_path, output_path):
     im_rw = im_rw - im_rw % 32
     im_rh = im_rh - im_rh % 32
     im = F.interpolate(im, size=(im_rh, im_rw), mode='area')
-    _, _, matte = modnet(im.cuda(), True)
+    _, _, matte = modnet(im.to(device), True)
     matte = F.interpolate(matte, size=(im_h, im_w), mode='area')
     matte = matte[0][0].data.cpu().numpy()
-    Image.fromarray(((matte * 255).astype('uint8')), mode='L').save(output_path)
+    matte_path = str(randrange(1000)) + ".png"
+    Image.fromarray(((matte * 255).astype('uint8')), mode='L').save(matte_path)
+    cutout(input_path, matte_path, output_path)
+    clean(matte_path)
 
 
 def contains_people(path):
@@ -191,7 +222,6 @@ if __name__ == '__main__':
         'tools.response_headers.headers': [('Content-Type', 'application/json;encoding=utf-8')],
     })
 
-    global model_for_detection
     model_for_detection = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
     model_for_detection.eval()
 

@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw
 
-for i in range(1, 12):
+for i in range(1, 13):
     filename = str(i)
     try:
         image = Image.open("cutouts/cutout_" + filename + ".png")
