@@ -39,3 +39,151 @@
 [08/Dec/2021:22:25:50]  Completed api call.Time spent 9.094 s
 [08/Dec/2021:22:26:01]  Completed api call.Time spent 7.547 s
 [08/Dec/2021:22:26:13]  Completed api call.Time spent 7.920 s
+[08/Dec/2021:23:43:54] ENGINE Bus STARTING
+[08/Dec/2021:23:43:54] ENGINE Started monitor thread 'Autoreloader'.
+[08/Dec/2021:23:43:55] ENGINE Serving on http://0.0.0.0:8080
+[08/Dec/2021:23:43:55] ENGINE Bus STARTED
+[08/Dec/2021:23:52:12] ENGINE Bus STARTING
+[08/Dec/2021:23:52:12] ENGINE Started monitor thread 'Autoreloader'.
+[08/Dec/2021:23:52:12] ENGINE Serving on http://0.0.0.0:8080
+[08/Dec/2021:23:52:12] ENGINE Bus STARTED
+[08/Dec/2021:23:54:20] ENGINE Bus STARTING
+[08/Dec/2021:23:54:20] ENGINE Started monitor thread 'Autoreloader'.
+[08/Dec/2021:23:54:21] ENGINE Serving on http://0.0.0.0:8080
+[08/Dec/2021:23:54:21] ENGINE Bus STARTED
+[08/Dec/2021:23:56:05] ENGINE Bus STARTING
+[08/Dec/2021:23:56:05] ENGINE Started monitor thread 'Autoreloader'.
+[08/Dec/2021:23:56:05] ENGINE Serving on http://0.0.0.0:8080
+[08/Dec/2021:23:56:05] ENGINE Bus STARTED
+[08/Dec/2021:23:56:14] HTTP 
+Traceback (most recent call last):
+  File "D:\Anaconda\lib\site-packages\cherrypy\_cprequest.py", line 638, in respond
+    self._do_respond(path_info)
+  File "D:\Anaconda\lib\site-packages\cherrypy\_cprequest.py", line 697, in _do_respond
+    response.body = self.handler()
+  File "D:\Anaconda\lib\site-packages\cherrypy\lib\encoding.py", line 219, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "D:\Anaconda\lib\site-packages\cherrypy\_cpdispatch.py", line 54, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "C:/Users/264979/Video-creative-platform/Docker/server.py", line 247, in method2
+    return process_api_requests(body).encode("utf-8")
+  File "C:/Users/264979/Video-creative-platform/Docker/server.py", line 73, in process_api_requests
+    paths = body.get('paths')
+AttributeError: 'str' object has no attribute 'get'
+[08/Dec/2021:23:56:14] HTTP 
+Request Headers:
+  Remote-Addr: 127.0.0.1
+  HOST: localhost:8080
+  USER-AGENT: python-requests/2.24.0
+  ACCEPT-ENCODING: gzip, deflate
+  ACCEPT: */*
+  CONNECTION: keep-alive
+  Content-Type: application/json
+  Content-Length: 993
+[08/Dec/2021:23:56:33] HTTP 
+Traceback (most recent call last):
+  File "D:\Anaconda\lib\site-packages\cherrypy\_cprequest.py", line 638, in respond
+    self._do_respond(path_info)
+  File "D:\Anaconda\lib\site-packages\cherrypy\_cprequest.py", line 697, in _do_respond
+    response.body = self.handler()
+  File "D:\Anaconda\lib\site-packages\cherrypy\lib\encoding.py", line 219, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "D:\Anaconda\lib\site-packages\cherrypy\_cpdispatch.py", line 54, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "C:/Users/264979/Video-creative-platform/Docker/server.py", line 247, in method2
+    return process_api_requests(body).encode("utf-8")
+  File "C:/Users/264979/Video-creative-platform/Docker/server.py", line 73, in process_api_requests
+    paths = body.get('paths')
+AttributeError: 'str' object has no attribute 'get'
+[08/Dec/2021:23:56:33] HTTP 
+Request Headers:
+  Remote-Addr: 127.0.0.1
+  HOST: localhost:8080
+  USER-AGENT: python-requests/2.24.0
+  ACCEPT-ENCODING: gzip, deflate
+  ACCEPT: */*
+  CONNECTION: keep-alive
+  Content-Type: application/json
+  Content-Length: 993
+[09/Dec/2021:00:16:47] ENGINE Bus STARTING
+[09/Dec/2021:00:16:47] ENGINE Started monitor thread 'Autoreloader'.
+[09/Dec/2021:00:16:47] ENGINE Serving on http://0.0.0.0:8080
+[09/Dec/2021:00:16:47] ENGINE Bus STARTED
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:16:55]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:09] ENGINE Bus STARTING
+[09/Dec/2021:00:18:09] ENGINE Started monitor thread 'Autoreloader'.
+[09/Dec/2021:00:18:09] ENGINE Serving on http://0.0.0.0:8080
+[09/Dec/2021:00:18:09] ENGINE Bus STARTED
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:18:21]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:12] ENGINE Bus STARTING
+[09/Dec/2021:00:19:12] ENGINE Started monitor thread 'Autoreloader'.
+[09/Dec/2021:00:19:12] ENGINE Serving on http://0.0.0.0:8080
+[09/Dec/2021:00:19:12] ENGINE Bus STARTED
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:19:19]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:09] ENGINE Bus STARTING
+[09/Dec/2021:00:20:09] ENGINE Started monitor thread 'Autoreloader'.
+[09/Dec/2021:00:20:09] ENGINE Serving on http://0.0.0.0:8080
+[09/Dec/2021:00:20:09] ENGINE Bus STARTED
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:20:17]  Completed api call.Time spent 0.000 s
+[09/Dec/2021:00:21:27] ENGINE Bus STARTING
+[09/Dec/2021:00:21:27] ENGINE Started monitor thread 'Autoreloader'.
+[09/Dec/2021:00:21:28] ENGINE Serving on http://0.0.0.0:8080
+[09/Dec/2021:00:21:28] ENGINE Bus STARTED
+[17/Dec/2021:09:26:32] ENGINE Bus STARTING
+[17/Dec/2021:09:26:32] ENGINE Started monitor thread 'Autoreloader'.
+[17/Dec/2021:09:26:33] ENGINE Serving on http://0.0.0.0:8080
+[17/Dec/2021:09:26:33] ENGINE Bus STARTED
+[17/Dec/2021:09:29:04] ENGINE Bus STARTING
+[17/Dec/2021:09:29:04] ENGINE Started monitor thread 'Autoreloader'.
+[17/Dec/2021:09:29:04] ENGINE Serving on http://0.0.0.0:8080
+[17/Dec/2021:09:29:04] ENGINE Bus STARTED
+[17/Dec/2021:09:32:36] ENGINE Bus STARTING
+[17/Dec/2021:09:32:36] ENGINE Started monitor thread 'Autoreloader'.
+[17/Dec/2021:09:32:36] ENGINE Serving on http://0.0.0.0:8080
+[17/Dec/2021:09:32:36] ENGINE Bus STARTED
+[17/Dec/2021:09:33:02]  Completed api call.Time spent 15.745 s
+[17/Dec/2021:09:33:02]  Completed api call.Time spent 16.105 s

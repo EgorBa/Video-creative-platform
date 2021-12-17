@@ -18,7 +18,7 @@ import torchvision.transforms as T
 import torchvision
 from pymatting import cutout
 from random import randrange
-from threading import Thread
+import threading
 
 from Docker.MODNet.src.models.modnet import MODNet
 
@@ -31,20 +31,13 @@ config = yaml.safe_load(open("config.yml"))
 
 model_for_detection = None
 
-def process_api_request(body):
-    """
-    This methos is for extracting json parameters and processing the actual api request.
-    All api format and logic is to be kept in here.
-    :param body:
-    :return:
-    """
-    input_path = body.get('input_path')
-    output_path = body.get('output_path')
 
+def process_request_by_input_output_path(input_path, output_path, model, barrier=None):
+    print("Process img : " + input_path)
     result_str = 'image has been processed'
     start = time.time()
     try:
-        if contains_people(input_path):
+        if contains_people(input_path, model):
             use_modnet(input_path, output_path)
             pass
         else:
@@ -57,6 +50,8 @@ def process_api_request(body):
 
     time_spent = time.time() - start
     log("Completed api call.Time spent {0:.3f} s".format(time_spent))
+    if barrier is not None:
+        barrier.wait()
 
     result = {
         'result': result_str
@@ -64,8 +59,41 @@ def process_api_request(body):
     return json.dumps(result)
 
 
+def process_api_request(body):
+    """
+    This methos is for extracting json parameters and processing the actual api request.
+    All api format and logic is to be kept in here.
+    :param body:
+    :return:
+    """
+    input_path = body.get('input_path')
+    output_path = body.get('output_path')
+    return process_request_by_input_output_path(input_path, output_path, model_for_detection)
+
+
+def process_api_requests(body):
+    input_paths = body.get('input_path').split('|')
+    output_paths = body.get('output_path').split('|')
+    size = int(body.get('size'))
+    barrier = threading.Barrier(size + 1)
+
+    for i in range(size):
+        input_path = input_paths[i]
+        output_path = output_paths[i]
+
+        th = threading.Thread(target=process_request_by_input_output_path, args=(input_path, output_path, model_for_detection, barrier))
+        th.start()
+
+    barrier.wait()
+    result_str = 'image has been processed'
+    result = {
+        'result': result_str
+    }
+    return json.dumps(result)
+
+
 def clean(path):
-    th = Thread(target=os.remove, args=(path,))
+    th = threading.Thread(target=os.remove, args=(path,))
     th.start()
 
 
@@ -156,22 +184,22 @@ def use_modnet(input_path, output_path):
     clean(matte_path)
 
 
-def contains_people(path):
-    global model_for_detection
-    if model_for_detection is not None:
+def contains_people(path, model):
+    print("Check contains people img : " + path)
+    if model is not None:
         img = Image.open(path)
         transform = T.Compose([T.ToTensor()])
         img = transform(img)
-        pred = model_for_detection([img])
+        pred = model([img])
         labels = list(pred[0]['labels'].numpy())
         scores = list(pred[0]['scores'].detach().numpy())
         for i in range(len(labels)):
             if labels[i] == 1 and scores[i] > 0.95:
                 return True
     else:
-        model_for_detection = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
-        model_for_detection.eval()
-        return contains_people(path)
+        model = torchvision.models.detection.fasterrcnn_resnet50_fpn(pretrained=True)
+        model.eval()
+        return contains_people(path, model)
     return False
 
 
@@ -205,6 +233,13 @@ class ApiServerController(object):
         raw = cherrypy.request.body.read(int(cl))
         body = json.loads(raw)
         return process_api_request(body).encode("utf-8")
+
+    @cherrypy.expose('/method2')
+    def method2(self):
+        cl = cherrypy.request.headers['Content-Length']
+        raw = cherrypy.request.body.read(int(cl))
+        body = json.loads(raw)
+        return process_api_requests(body).encode("utf-8")
 
 
 if __name__ == '__main__':
