@@ -31,6 +31,8 @@ config = yaml.safe_load(open("config.yml"))
 
 model_for_detection = None
 
+diversity = 1000000
+
 
 def process_request_by_input_output_path(input_path, output_path, model, barrier=None):
     print("Process img : " + input_path)
@@ -71,6 +73,68 @@ def process_api_request(body):
     return process_request_by_input_output_path(input_path, output_path, model_for_detection)
 
 
+def process_api_request_cutout(body):
+    image_bytes = body.get('img')
+    input_path = "resourses/" + str(randrange(diversity)) + ".png"
+    output_path = "resourses/" + str(randrange(diversity)) + ".png"
+    inp = io.BytesIO(image_bytes.encode('ISO-8859-1'))
+    imageFile = Image.open(inp)
+    imageFile.save(input_path)
+
+    process_request_by_input_output_path(input_path, output_path, model_for_detection)
+
+    imageFileObj = open(output_path, 'rb')
+    imageBinaryBytes = imageFileObj.read()
+    imageStream = io.BytesIO(imageBinaryBytes)
+    s = imageStream.read().decode('ISO-8859-1')
+    result = {
+        'result': s
+    }
+
+    imageFile.close()
+    imageFileObj.close()
+
+    clean(input_path)
+    clean(output_path)
+    return json.dumps(result)
+
+
+def process_api_request_cutouts(body):
+    image_bytes = body.get('imgs')
+    size = len(image_bytes['imgs'])
+    barrier = threading.Barrier(size + 1)
+
+    output_paths = []
+
+    for i in range(size):
+        input_path = "resourses/" + str(randrange(diversity)) + ".png"
+        output_path = "resourses/" + str(randrange(diversity)) + ".png"
+        output_paths.append(output_path)
+        inp = io.BytesIO(image_bytes['imgs'][i].encode('ISO-8859-1'))
+        imageFile = Image.open(inp)
+        imageFile.save(input_path)
+        th = threading.Thread(target=process_request_by_input_output_path,
+                              args=(input_path, output_path, model_for_detection, barrier))
+        th.start()
+
+    barrier.wait()
+    answer = []
+
+    for i in range(size):
+        output_path = output_paths[i]
+        imageFileObj = open(output_path, 'rb')
+        imageBinaryBytes = imageFileObj.read()
+        imageStream = io.BytesIO(imageBinaryBytes)
+        s = imageStream.read().decode('ISO-8859-1')
+        answer.append(s)
+
+    result = {
+        'result': answer
+    }
+
+    return json.dumps(result)
+
+
 def process_api_requests(body):
     input_paths = body.get('input_path').split('|')
     output_paths = body.get('output_path').split('|')
@@ -81,7 +145,8 @@ def process_api_requests(body):
         input_path = input_paths[i]
         output_path = output_paths[i]
 
-        th = threading.Thread(target=process_request_by_input_output_path, args=(input_path, output_path, model_for_detection, barrier))
+        th = threading.Thread(target=process_request_by_input_output_path,
+                              args=(input_path, output_path, model_for_detection, barrier))
         th.start()
 
     barrier.wait()
@@ -98,8 +163,8 @@ def clean(path):
 
 
 def use_cv_and_rembg(input_path, output_path):
-    output_path_cv2 = str(randrange(1000)) + ".png"
-    output_path_rembg = str(randrange(1000)) + ".png"
+    output_path_cv2 = "resourses/" + str(randrange(diversity)) + ".png"
+    output_path_rembg = "resourses/" + str(randrange(diversity)) + ".png"
 
     img = cv2.imread(input_path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -240,6 +305,20 @@ class ApiServerController(object):
         raw = cherrypy.request.body.read(int(cl))
         body = json.loads(raw)
         return process_api_requests(body).encode("utf-8")
+
+    @cherrypy.expose('/cutout')
+    def cutout(self):
+        cl = cherrypy.request.headers['Content-Length']
+        raw = cherrypy.request.body.read(int(cl))
+        body = json.loads(raw)
+        return process_api_request_cutout(body).encode("utf-8")
+
+    @cherrypy.expose('/cutouts')
+    def cutouts(self):
+        cl = cherrypy.request.headers['Content-Length']
+        raw = cherrypy.request.body.read(int(cl))
+        body = json.loads(raw)
+        return process_api_request_cutouts(body).encode("utf-8")
 
 
 if __name__ == '__main__':
