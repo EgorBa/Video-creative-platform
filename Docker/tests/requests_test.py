@@ -96,7 +96,7 @@ def test_send_api_requests_bytes():
     for i in range(1, 3):
         filename = str(i)
         request.append("examples/" + filename + ".jpg")
-    resp = send_api_requests_bytes(request)
+    resp = send_api_requests_bytes(request).json()
     print(resp)
 
 
