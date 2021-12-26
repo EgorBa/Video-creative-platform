@@ -75,24 +75,23 @@ def process_api_request(body):
 
 def process_api_request_cutout(body):
     image_bytes = body.get('img')
-    input_path = "resourses/" + str(randrange(diversity)) + ".png"
-    output_path = "resourses/" + str(randrange(diversity)) + ".png"
+    input_path = get_path("in")
+    output_path = get_path("out")
     inp = io.BytesIO(image_bytes.encode('ISO-8859-1'))
     imageFile = Image.open(inp)
     imageFile.save(input_path)
+    imageFile.close()
 
     process_request_by_input_output_path(input_path, output_path, model_for_detection)
 
     imageFileObj = open(output_path, 'rb')
     imageBinaryBytes = imageFileObj.read()
+    imageFileObj.close()
     imageStream = io.BytesIO(imageBinaryBytes)
     s = imageStream.read().decode('ISO-8859-1')
     result = {
         'result': s
     }
-
-    imageFile.close()
-    imageFileObj.close()
 
     clean(input_path)
     clean(output_path)
@@ -104,15 +103,18 @@ def process_api_request_cutouts(body):
     size = len(image_bytes['imgs'])
     barrier = threading.Barrier(size + 1)
 
+    input_paths = []
     output_paths = []
 
     for i in range(size):
-        input_path = "resourses/" + str(randrange(diversity)) + ".png"
-        output_path = "resourses/" + str(randrange(diversity)) + ".png"
+        input_path = get_path("in")
+        input_paths.append(input_path)
+        output_path = get_path("out")
         output_paths.append(output_path)
         inp = io.BytesIO(image_bytes['imgs'][i].encode('ISO-8859-1'))
         imageFile = Image.open(inp)
         imageFile.save(input_path)
+        imageFile.close()
         th = threading.Thread(target=process_request_by_input_output_path,
                               args=(input_path, output_path, model_for_detection, barrier))
         th.start()
@@ -124,6 +126,9 @@ def process_api_request_cutouts(body):
         output_path = output_paths[i]
         imageFileObj = open(output_path, 'rb')
         imageBinaryBytes = imageFileObj.read()
+        imageFileObj.close()
+        clean(output_path)
+        clean(input_paths[i])
         imageStream = io.BytesIO(imageBinaryBytes)
         s = imageStream.read().decode('ISO-8859-1')
         answer.append(s)
@@ -163,8 +168,8 @@ def clean(path):
 
 
 def use_cv_and_rembg(input_path, output_path):
-    output_path_cv2 = "resourses/" + str(randrange(diversity)) + ".png"
-    output_path_rembg = "resourses/" + str(randrange(diversity)) + ".png"
+    output_path_cv2 = get_path("output_cv2")
+    output_path_rembg = get_path("output_rembg")
 
     img = cv2.imread(input_path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -202,7 +207,7 @@ def use_rembg(input_path, output_path):
 
 
 def use_modnet(input_path, output_path):
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cpu")
     ckpt_path = 'modnet_photographic_portrait_matting.ckpt'
     ref_size = 512
     im_transform = transforms.Compose(
@@ -277,6 +282,10 @@ def contains_white_bg(path):
     if a + b + c > 750:
         return True
     return False
+
+
+def get_path(tag):
+    return "resources/" + str(randrange(diversity)) + "_in.png"
 
 
 class ApiServerController(object):

@@ -97,7 +97,9 @@ def test_send_api_requests_bytes():
         filename = str(i)
         request.append("examples/" + filename + ".jpg")
     resp = send_api_requests_bytes(request).json()
-    print(resp)
+    inp = io.BytesIO(resp['result'][0].encode('ISO-8859-1'))
+    imageFile = Image.open(inp)
+    imageFile.show()
 
 
 if __name__ == '__main__':

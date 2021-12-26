@@ -1054,3 +1054,124 @@ cherrypy.process.wspbus.ChannelFailures: Timeout('Port 8080 not free on 0.0.0.0.
 [18/Dec/2021:16:40:03]  Completed api call.Time spent 7.962 s
 [18/Dec/2021:16:40:28]  Completed api call.Time spent 11.833 s
 [18/Dec/2021:16:40:28]  Completed api call.Time spent 12.118 s
+[26/Dec/2021:15:34:11] ENGINE Bus STARTING
+[26/Dec/2021:15:34:11] ENGINE Started monitor thread 'Autoreloader'.
+[26/Dec/2021:15:34:11] ENGINE Serving on http://0.0.0.0:8080
+[26/Dec/2021:15:34:11] ENGINE Bus STARTED
+[26/Dec/2021:15:34:24] HTTP 
+Traceback (most recent call last):
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/cherrypy/_cprequest.py", line 638, in respond
+    self._do_respond(path_info)
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/cherrypy/_cprequest.py", line 697, in _do_respond
+    response.body = self.handler()
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/cherrypy/lib/encoding.py", line 223, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/cherrypy/_cpdispatch.py", line 54, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "/Users/egor.bazhenov/Video-creative-platform/Docker/server.py", line 319, in cutout
+    return process_api_request_cutout(body).encode("utf-8")
+  File "/Users/egor.bazhenov/Video-creative-platform/Docker/server.py", line 83, in process_api_request_cutout
+    imageFile.save(input_path)
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/PIL/Image.py", line 2237, in save
+    fp = builtins.open(filename, "w+b")
+FileNotFoundError: [Errno 2] No such file or directory: 'resourses/186146_in.png'
+[26/Dec/2021:15:34:24] HTTP 
+Request Headers:
+  Remote-Addr: 127.0.0.1
+  HOST: localhost:8080
+  USER-AGENT: python-requests/2.26.0
+  ACCEPT-ENCODING: gzip, deflate
+  ACCEPT: */*
+  CONNECTION: keep-alive
+  Content-Type: application/json
+  Content-Length: 586712
+[26/Dec/2021:15:35:58] HTTP 
+Traceback (most recent call last):
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/cherrypy/_cprequest.py", line 638, in respond
+    self._do_respond(path_info)
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/cherrypy/_cprequest.py", line 697, in _do_respond
+    response.body = self.handler()
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/cherrypy/lib/encoding.py", line 223, in __call__
+    self.body = self.oldhandler(*args, **kwargs)
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/cherrypy/_cpdispatch.py", line 54, in __call__
+    return self.callable(*self.args, **self.kwargs)
+  File "/Users/egor.bazhenov/Video-creative-platform/Docker/server.py", line 319, in cutout
+    return process_api_request_cutout(body).encode("utf-8")
+  File "/Users/egor.bazhenov/Video-creative-platform/Docker/server.py", line 83, in process_api_request_cutout
+    imageFile.save(input_path)
+  File "/Users/egor.bazhenov/Video-creative-platform/venv/lib/python3.9/site-packages/PIL/Image.py", line 2237, in save
+    fp = builtins.open(filename, "w+b")
+FileNotFoundError: [Errno 2] No such file or directory: 'resourses/133815_in.png'
+[26/Dec/2021:15:35:58] HTTP 
+Request Headers:
+  Remote-Addr: 127.0.0.1
+  HOST: localhost:8080
+  USER-AGENT: python-requests/2.26.0
+  ACCEPT-ENCODING: gzip, deflate
+  ACCEPT: */*
+  CONNECTION: keep-alive
+  Content-Type: application/json
+  Content-Length: 586712
+[26/Dec/2021:15:36:54] ENGINE Keyboard Interrupt: shutting down bus
+[26/Dec/2021:15:36:54] ENGINE Bus STOPPING
+[26/Dec/2021:15:36:54] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('0.0.0.0', 8080)) shut down
+[26/Dec/2021:15:36:54] ENGINE Stopped thread 'Autoreloader'.
+[26/Dec/2021:15:36:54] ENGINE Bus STOPPED
+[26/Dec/2021:15:36:54] ENGINE Bus EXITING
+[26/Dec/2021:15:36:54] ENGINE Bus EXITED
+[26/Dec/2021:15:36:54] ENGINE Waiting for child threads to terminate...
+[26/Dec/2021:15:37:25] ENGINE Bus STARTING
+[26/Dec/2021:15:37:25] ENGINE Started monitor thread 'Autoreloader'.
+[26/Dec/2021:15:37:25] ENGINE Serving on http://0.0.0.0:8080
+[26/Dec/2021:15:37:25] ENGINE Bus STARTED
+[26/Dec/2021:15:39:13] ENGINE Restarting because /Users/egor.bazhenov/Video-creative-platform/Docker/server.py changed.
+[26/Dec/2021:15:39:13] ENGINE Stopped thread 'Autoreloader'.
+[26/Dec/2021:15:39:13] ENGINE Bus STOPPING
+[26/Dec/2021:15:41:15]  Completed api call.Time spent 225.832 s
+[26/Dec/2021:15:41:15] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('0.0.0.0', 8080)) shut down
+[26/Dec/2021:15:41:15] ENGINE Bus STOPPED
+[26/Dec/2021:15:41:15] ENGINE Bus EXITING
+[26/Dec/2021:15:41:15] ENGINE Bus EXITED
+[26/Dec/2021:15:41:15] ENGINE Waiting for child threads to terminate...
+[26/Dec/2021:15:41:15] ENGINE Re-spawning /Library/Frameworks/Python.framework/Versions/3.9/Resources/Python.app/Contents/MacOS/Python /Users/egor.bazhenov/Video-creative-platform/Docker/server.py
+[26/Dec/2021:15:41:20] ENGINE Bus STARTING
+[26/Dec/2021:15:41:20] ENGINE Started monitor thread 'Autoreloader'.
+[26/Dec/2021:15:41:20] ENGINE Serving on http://0.0.0.0:8080
+[26/Dec/2021:15:41:20] ENGINE Bus STARTED
+[26/Dec/2021:15:41:46] ENGINE Keyboard Interrupt: shutting down bus
+[26/Dec/2021:15:41:46] ENGINE Bus STOPPING
+[26/Dec/2021:15:41:46] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('0.0.0.0', 8080)) shut down
+[26/Dec/2021:15:41:46] ENGINE Stopped thread 'Autoreloader'.
+[26/Dec/2021:15:41:46] ENGINE Bus STOPPED
+[26/Dec/2021:15:41:46] ENGINE Bus EXITING
+[26/Dec/2021:15:41:46] ENGINE Bus EXITED
+[26/Dec/2021:15:41:46] ENGINE Waiting for child threads to terminate...
+[26/Dec/2021:15:44:13] ENGINE Bus STARTING
+[26/Dec/2021:15:44:13] ENGINE Started monitor thread 'Autoreloader'.
+[26/Dec/2021:15:44:13] ENGINE Serving on http://0.0.0.0:8080
+[26/Dec/2021:15:44:13] ENGINE Bus STARTED
+[26/Dec/2021:15:44:25]  Completed api call.Time spent 7.815 s
+[26/Dec/2021:15:46:19] ENGINE Keyboard Interrupt: shutting down bus
+[26/Dec/2021:15:46:19] ENGINE Bus STOPPING
+[26/Dec/2021:15:46:19] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('0.0.0.0', 8080)) shut down
+[26/Dec/2021:15:46:19] ENGINE Stopped thread 'Autoreloader'.
+[26/Dec/2021:15:46:19] ENGINE Bus STOPPED
+[26/Dec/2021:15:46:19] ENGINE Bus EXITING
+[26/Dec/2021:15:46:19] ENGINE Bus EXITED
+[26/Dec/2021:15:46:19] ENGINE Waiting for child threads to terminate...
+[26/Dec/2021:15:46:23] ENGINE Bus STARTING
+[26/Dec/2021:15:46:23] ENGINE Started monitor thread 'Autoreloader'.
+[26/Dec/2021:15:46:23] ENGINE Serving on http://0.0.0.0:8080
+[26/Dec/2021:15:46:23] ENGINE Bus STARTED
+[26/Dec/2021:15:46:44]  Completed api call.Time spent 9.069 s
+[26/Dec/2021:15:46:45]  Completed api call.Time spent 9.132 s
+[26/Dec/2021:15:47:36]  Completed api call.Time spent 8.283 s
+[26/Dec/2021:15:47:36]  Completed api call.Time spent 8.316 s
+[26/Dec/2021:15:47:42] ENGINE Keyboard Interrupt: shutting down bus
+[26/Dec/2021:15:47:42] ENGINE Bus STOPPING
+[26/Dec/2021:15:47:42] ENGINE HTTP Server cherrypy._cpwsgi_server.CPWSGIServer(('0.0.0.0', 8080)) shut down
+[26/Dec/2021:15:47:42] ENGINE Stopped thread 'Autoreloader'.
+[26/Dec/2021:15:47:42] ENGINE Bus STOPPED
+[26/Dec/2021:15:47:42] ENGINE Bus EXITING
+[26/Dec/2021:15:47:42] ENGINE Bus EXITED
+[26/Dec/2021:15:47:42] ENGINE Waiting for child threads to terminate...
