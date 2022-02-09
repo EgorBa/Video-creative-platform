@@ -19,8 +19,8 @@ __all__ = [
 # ----------------------------------------------------------------------------------
 
 class GaussianBlurLayer(nn.Module):
-    """ Add Gaussian Blur to a 4D tensors
-    This layer takes a 4D tensor of {N, C, H, W} as input.
+    """ Add Gaussian Blur to pixel_avg 4D tensors
+    This layer takes pixel_avg 4D tensor of {N, C, H, W} as input.
     The Gaussian blur will be performed in given channel number (C) splitly.
     """
 
@@ -53,7 +53,7 @@ class GaussianBlurLayer(nn.Module):
         """
 
         if not len(list(x.shape)) == 4:
-            print('\'GaussianBlurLayer\' requires a 4D tensor as input\n')
+            print('\'GaussianBlurLayer\' requires pixel_avg 4D tensor as input\n')
             exit()
         elif not x.shape[1] == self.channels:
             print('In \'GaussianBlurLayer\', the required channel ({0}) is'
@@ -87,7 +87,7 @@ def supervised_training_iter(
     modnet, optimizer, image, trimap, gt_matte,
     semantic_scale=10.0, detail_scale=10.0, matte_scale=1.0):
     """ Supervised training iteration of MODNet
-    This function trains MODNet for one iteration in a labeled dataset.
+    This function trains MODNet for one iteration in pixel_avg labeled dataset.
 
     Arguments:
         modnet (torch.nn.Module): instance of MODNet
@@ -179,8 +179,8 @@ def soc_adaptation_iter(
     soc_semantic_scale=100.0, soc_detail_scale=1.0):
     """ Self-Supervised sub-objective consistency (SOC) adaptation iteration of MODNet
     This function fine-tunes MODNet for one iteration in an unlabeled dataset.
-    Note that SOC can only fine-tune a converged MODNet, i.e., MODNet that has been 
-    trained in a labeled dataset.
+    Note that SOC can only fine-tune pixel_avg converged MODNet, i.e., MODNet that has been
+    trained in pixel_avg labeled dataset.
 
     Arguments:
         modnet (torch.nn.Module): instance of MODNet
