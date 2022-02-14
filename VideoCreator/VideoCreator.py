@@ -35,13 +35,47 @@ def find_max_font_size(font_path, text, max_w, max_h):
         if was_OK and (w_text > max_w or h_text > max_h):
             return i - 1
         was_OK = w_text <= max_w and h_text <= max_h
-    return 0
+    return 1000
 
 
 def clean_res(paths):
     for path in paths:
         th = threading.Thread(target=os.remove, args=(path,))
         th.start()
+
+def add_corners(im, rad):
+    circle = Image.new('L', (rad * 2, rad * 2), 0)
+    draw = ImageDraw.Draw(circle)
+    draw.ellipse((0, 0, rad * 2, rad * 2), fill=255)
+    alpha = Image.new('L', im.size, 255)
+    w, h = im.size
+    alpha.paste(circle.crop((0, 0, rad, rad)), (0, 0))
+    alpha.paste(circle.crop((0, rad, rad, rad * 2)), (0, h - rad))
+    alpha.paste(circle.crop((rad, 0, rad * 2, rad)), (w - rad, 0))
+    alpha.paste(circle.crop((rad, rad, rad * 2, rad * 2)), (w - rad, h - rad))
+    im.putalpha(alpha)
+    return im
+
+
+def create_sale(background, x5, y5, x6, y6, promo_text, promo_type):
+    if promo_type == 'circle':
+        draw = ImageDraw.Draw(background)
+        draw.ellipse((x5, y5, x6, y6), fill='blue')
+        draw.rectangle((x5, y5, x6, y6), fill='blue')
+        text_w = int((x6 - x5) / (2 ** 0.5))
+        size_t = find_max_font_size("21158.ttf", promo_text, text_w, text_w)
+        font = ImageFont.truetype("21158.ttf", size=size_t)
+        (w, h) = text_size(promo_text, font)
+        draw.text((int((x5 + x6 - w) / 2), int((y5 + y6 - h * 1.5) / 2)), promo_text, font=font, fill=('#1C0606'))
+    if promo_type == 'rect':
+        sale = Image.new('RGBA', (x6 - x5, y6 - y5), (255, 255, 255, 255))
+        draw = ImageDraw.Draw(sale)
+        size_t = find_max_font_size("21158.ttf", promo_text, x6 - x5, y6 - y5) - 10
+        font = ImageFont.truetype("21158.ttf", size=size_t)
+        (w, h) = text_size(promo_text, font)
+        draw.text((int((x6 - x5 - w) / 2), int((y6 - y5 - h * 1.5) / 2)), promo_text, font=font, fill=('#1C0606'))
+        sale = add_corners(sale, 40)
+        background.paste(sale, (int((x5 + x6 - w) / 2), int((y5 + y6 - h) / 2)), mask=sale)
 
 
 # This picture shows how the elements will be placed depending on the coordinates.
@@ -72,8 +106,9 @@ def clean_res(paths):
 # Generate one video with text and image.
 # Returns path to this video.
 # animation_type can be "simple", "move" and "scale"
+# promo_type can be "rect", "circle"
 def generate_one_video(video_length, x1=0, y1=0, x2=0, y2=0, x3=0, y3=0, x4=0, y4=0, text="", path_to_image="",
-                       animation_type="simple"):
+                       animation_type="simple", x5=0, y5=0, x6=0, y6=0, promo_text="", promo_type="rect"):
     if (path_to_image == "" and text == "") \
             or (text != "" and (x1 == x2 or y1 == y2)) \
             or (path_to_image != "" and (x3 == x4 or y3 == y4)) \
@@ -94,6 +129,8 @@ def generate_one_video(video_length, x1=0, y1=0, x2=0, y2=0, x3=0, y3=0, x4=0, y
             font = ImageFont.truetype("21158.ttf", size=size_t)
             (w, h) = text_size(text, font)
             draw.text((int((x1 + x2 - w) / 2), int((y1 + y2 - h) / 2)), text, font=font, fill=('#1C0606'))
+        if promo_text != "":
+            create_sale(background, x5, y5, x6, y6, promo_text, promo_type)
         out_image_path = "prepared/" + str(randrange(1000000)) + ".png"
         background.save(out_image_path, format="png")
         out_video_path = 'videos/output_video_' + str(randrange(1000000)) + '.avi'
@@ -110,6 +147,8 @@ def generate_one_video(video_length, x1=0, y1=0, x2=0, y2=0, x3=0, y3=0, x4=0, y
             (w, h) = find_image_size(w, h, x4 - x3, y4 - y3)
             image = image.resize((int(w), int(h)))
             background.paste(image, (int((x3 + x4 - w) / 2), int((y3 + y4 - h) / 2)), mask=image)
+        if promo_text != "":
+            create_sale(background, x5, y5, x6, y6, promo_text, promo_type)
         out_image_path = "prepared/" + str(randrange(1000000)) + ".png"
         background.save(out_image_path, format="png")
         out_image_video_path = 'videos/output_video_' + str(randrange(1000000)) + '.avi'
@@ -143,6 +182,8 @@ def generate_one_video(video_length, x1=0, y1=0, x2=0, y2=0, x3=0, y3=0, x4=0, y
             background = Image.new('RGBA', frameSize, (255, 0, 0, 255))
             if path_to_image != "":
                 background.paste(image, (int((x3 + x4 - image_w) / 2), int((y3 + y4 - image_h) / 2)), mask=image)
+            if promo_text != "":
+                create_sale(background, x5, y5, x6, y6, promo_text, promo_type)
             draw = ImageDraw.Draw(background)
             f_size = find_max_font_size("21158.ttf", text, x2 - x1, y2 - y1)
             size_t = min(int(f_size * ((j * (2 * count_frames - j)) / count_frames ** 2)), f_size)
@@ -174,4 +215,5 @@ def generate_one_video(video_length, x1=0, y1=0, x2=0, y2=0, x3=0, y3=0, x4=0, y
 # generate_video("first_variant", paths, texts)
 
 generate_one_video(4, x1=0, y1=0, x2=W, y2=int(H / 3), x3=0, y3=int(H / 3), x4=W, y4=H, text="Крутой пылесос",
-                   path_to_image="cutouts/cutout_1.png", animation_type="scale")
+                   path_to_image="cutouts/cutout_1.png", animation_type='scale', promo_text="10%", x5=400, y5=400,
+                   x6=600, y6=600, promo_type='rect')
