@@ -31,16 +31,22 @@ def get_colors_by_logo(path):
     X = np.array(a)
     kmeans = KMeans(n_clusters=3, random_state=0).fit(X)
     colors = []
+    min_value_color = 20
+    max_value_color = 240
     for j in range(3):
+        shift = 40
         rgb_colors = list(map(int, kmeans.cluster_centers_[j][:3]))
         hsv_colors = colorsys.rgb_to_hsv(rgb_colors[0] / 255, rgb_colors[1] / 255, rgb_colors[2] / 255)
         hsv_colors = [hsv_colors[0] * 255, hsv_colors[1] * 255, hsv_colors[2] * 255]
+        rgb_colors = [max(min(rgb_colors[0] + shift, max_value_color), min_value_color),
+                      max(min(rgb_colors[1] + shift, max_value_color), min_value_color),
+                      max(min(rgb_colors[2] + shift, max_value_color), min_value_color)]
         colors.append((hsv_colors, rgb_colors))
     colors = sorted(colors, key=cmp_to_key(compare))
     hsv_colors = colors[-1][0]
     new_hsv_colors = [(hsv_colors[0] + 180) % 360, hsv_colors[1], hsv_colors[2]]
     new_rgb_colors = colorsys.hsv_to_rgb(new_hsv_colors[0] / 360, new_hsv_colors[1] / 360, new_hsv_colors[2] / 360)
-    new_rgb_colors = tuple(map(lambda x: int(x * 255), new_rgb_colors))
+    new_rgb_colors = tuple(map(lambda x: max(min(int(x * 255), max_value_color), min_value_color), new_rgb_colors))
     rgb_colors = tuple(colors[-1][1])
     return (rgb_colors, new_rgb_colors)
 
@@ -54,3 +60,5 @@ def test():
         font = ImageFont.truetype("21158.ttf", size=160)
         draw.text((0, 0), 'TEXT', font=font, fill=rgb_colors)
         background.save(path)
+
+test()
