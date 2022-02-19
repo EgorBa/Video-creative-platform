@@ -16,8 +16,8 @@ def compare(item1, item2):
         return 0
 
 
-for i in range(8):
-    imageFile = Image.open("logos/" + str(i) + ".png")
+def get_colors_by_logo(path):
+    imageFile = Image.open(path)
     imageFile = imageFile.convert('RGBA')
     a = []
     (W, H) = imageFile.size
@@ -30,7 +30,6 @@ for i in range(8):
                 a.append(imageFile.getpixel((w, h)))
     X = np.array(a)
     kmeans = KMeans(n_clusters=3, random_state=0).fit(X)
-
     colors = []
     for j in range(3):
         rgb_colors = list(map(int, kmeans.cluster_centers_[j][:3]))
@@ -43,9 +42,15 @@ for i in range(8):
     new_rgb_colors = colorsys.hsv_to_rgb(new_hsv_colors[0] / 360, new_hsv_colors[1] / 360, new_hsv_colors[2] / 360)
     new_rgb_colors = tuple(map(lambda x: int(x * 255), new_rgb_colors))
     rgb_colors = tuple(colors[-1][1])
-    background = Image.new('RGB', (256, 256), new_rgb_colors)
-    path = "logos/colors_with_text/" + str(i) + ".png"
-    draw = ImageDraw.Draw(background)
-    font = ImageFont.truetype("21158.ttf", size=160)
-    draw.text((0, 0), 'TEXT', font=font, fill=rgb_colors)
-    background.save(path)
+    return (rgb_colors, new_rgb_colors)
+
+
+def test():
+    for i in range(8):
+        (rgb_colors, new_rgb_colors) = get_colors_by_logo("logos/" + str(i) + ".png")
+        background = Image.new('RGB', (256, 256), new_rgb_colors)
+        path = "logos/colors_with_text/" + str(i) + ".png"
+        draw = ImageDraw.Draw(background)
+        font = ImageFont.truetype("21158.ttf", size=160)
+        draw.text((0, 0), 'TEXT', font=font, fill=rgb_colors)
+        background.save(path)
