@@ -226,7 +226,6 @@ def generate_one_video(video_length, x1=0, y1=0, x2=0, y2=0, x3=0, y3=0, x4=0, y
         clean_res(pictures)
         return out_video_path
     if animation_type == "by symbol" and text != "" and video_length > 1:
-        # count_frames = 60
         count_symbols = len(text)
         pictures = []
         if path_to_image != "":
@@ -259,6 +258,48 @@ def generate_one_video(video_length, x1=0, y1=0, x2=0, y2=0, x3=0, y3=0, x4=0, y
         out.release()
         clean_res(pictures)
         return out_video_path
+    if animation_type == "wiggle" and text != "" and video_length > 1:
+        count_frames = 60
+        shift_y = int((x2 - x1) * 0.05)
+        shift_x = int((y2 - y1) * 0.1)
+        pictures = []
+        if path_to_image != "":
+            image = Image.open(path_to_image)
+            (image_w, image_h) = image.size
+            (image_w, image_h) = find_image_size(image_w, image_h, x4 - x3, y4 - y3)
+            image = image.resize((int(image_w), int(image_h)))
+        for j in range(1, count_frames + 1):
+            background = Image.new('RGB', frameSize, rgb_colors)
+            if path_to_image != "":
+                background.paste(image, (int((x3 + x4 - image_w) / 2), int((y3 + y4 - image_h) / 2)), mask=image)
+            if promo_text != "":
+                create_sale(background, x5, y5, x6, y6, promo_text, promo_type)
+            draw = ImageDraw.Draw(background)
+            size_t = find_max_font_size("21158.ttf", text, x2 - x1 - shift_x, y2 - y1 - shift_y)
+            font = ImageFont.truetype("21158.ttf", size=size_t)
+            (w, h) = text_size(text, font)
+            x = int((x1 + x2 - w - shift_x) / 2 + shift_x * (count_frames - abs(2 * j - count_frames)) / count_frames)
+            if j <= count_frames * 3 / 4:
+                y = int((y1 + y2 - h - shift_y) / 2 + shift_y * (
+                            count_frames - abs(2 * j - count_frames / 2)) / count_frames)
+            else:
+                y = int((y1 + y2 - h - shift_y) / 2 + shift_y * ((2 * j - 3 * count_frames / 2) / count_frames))
+            draw.text((x, y), text, font=font, fill=new_rgb_colors)
+            out_path = "prepared/" + str(randrange(1000000)) + ".png"
+            pictures.append(out_path)
+            background.save(out_path, format="png")
+        out_video_path = 'videos/output_video_' + str(randrange(1000000)) + '.avi'
+        out = cv2.VideoWriter(out_video_path, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), count_frames, frameSize)
+        for i in range(video_length):
+            for p in pictures:
+                img = cv2.imread(p)
+                out.write(img)
+        # img = cv2.imread(pictures[-1])
+        # for i in range(int((video_length - 1) * count_symbols)):
+        #     out.write(img)
+        out.release()
+        clean_res(pictures)
+        return out_video_path
 
 
 # paths = ["cutouts/cutout_1.png",
@@ -274,31 +315,31 @@ video_len = 4
 
 path = generate_one_video(video_len, x1=0, y1=0, x2=W, y2=int(H / 3), x3=0, y3=int(H / 3), x4=W, y4=H,
                           text="Крутой пылесос",
-                          path_to_image="cutouts/cutout_1.png", animation_type='by symbol',
-                          # promo_text="10%", x5=400,y5=400, x6=600, y6=600, promo_type='rect',
+                          path_to_image="cutouts/cutout_1.png", animation_type='wiggle',
+                          promo_text="10%", x5=400,y5=400, x6=600, y6=600, promo_type='rect',
                           url='https://pythonist.ru')
-# path1 = generate_one_video(video_len, x1=0, y1=0, x2=W, y2=int(H / 3), x3=0, y3=int(H / 3), x4=W, y4=H,
-#                            text="Классная сковорода",
-#                            path_to_image="cutouts/cutout_2.png", animation_type='move', promo_text="50%", x5=400,
-#                            y5=400, x6=600, y6=600, promo_type='circle', url='https://pythonist.ru')
-# path2 = generate_one_video(video_len, x1=0, y1=0, x2=W, y2=int(H / 3), x3=0, y3=int(H / 3), x4=W, y4=H,
-#                            text="Удобные кроссовки",
-#                            path_to_image="cutouts/cutout_3.png", url='https://pythonist.ru')
-# path3 = generate_one_video(video_len, x1=0, y1=0, x2=W, y2=H, text="pythonist.ru",
-#                            animation_type='scale', url='https://pythonist.ru')
-#
-# videos = [path, path1, path2, path3]
-# print(videos)
-# clips = []
-# for i in range(len(videos)):
-#     clip = VideoFileClip(videos[i])
-#     if i == 0:
-#         clips.append(clip.set_start(i * video_len).crossfadeout(1))
-#     else:
-#         if i == len(videos) - 1:
-#             clips.append(clip.set_start(i * video_len).crossfadein(1))
-#         else:
-#             clips.append(clip.set_start(i * video_len).crossfadeout(1).crossfadein(1))
-# video = CompositeVideoClip(clips)
-# video.write_videofile("fourth_variant.mp4", fps=25)
-# clean_res(videos)
+path1 = generate_one_video(video_len, x1=0, y1=0, x2=W, y2=int(H / 3), x3=0, y3=int(H / 3), x4=W, y4=H,
+                           text="Классная сковорода",
+                           path_to_image="cutouts/cutout_2.png", animation_type='by symbol', promo_text="50%", x5=400,
+                           y5=400, x6=600, y6=600, promo_type='circle', url='https://pythonist.ru')
+path2 = generate_one_video(video_len, x1=0, y1=0, x2=W, y2=int(H / 3), x3=0, y3=int(H / 3), x4=W, y4=H,
+                           text="Удобные кроссовки", path_to_image="cutouts/cutout_3.png", animation_type='move',
+                           url='https://pythonist.ru')
+path3 = generate_one_video(video_len, x1=0, y1=0, x2=W, y2=H, text="pythonist.ru",
+                           animation_type='scale', url='https://pythonist.ru')
+
+videos = [path, path1, path2, path3]
+print(videos)
+clips = []
+for i in range(len(videos)):
+    clip = VideoFileClip(videos[i])
+    if i == 0:
+        clips.append(clip.set_start(i * video_len).crossfadeout(1))
+    else:
+        if i == len(videos) - 1:
+            clips.append(clip.set_start(i * video_len).crossfadein(1))
+        else:
+            clips.append(clip.set_start(i * video_len).crossfadeout(1).crossfadein(1))
+video = CompositeVideoClip(clips)
+video.write_videofile("fifth_variant.mp4", fps=25)
+clean_res(videos)
