@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PanelCreama</string>
+    <string-array name="companyType">
+        <item>Авто</item>
+        <item>Техника</item>
+        <item>Одежда</item>
+        <item>Еда</item>
+    </string-array>
+    <string-array name="socialType">
+        <item>VK</item>
+        <item>YouTube</item>
+        <item>Instagram</item>
+        <item>Facebook</item>
+    </string-array>
+</resources>

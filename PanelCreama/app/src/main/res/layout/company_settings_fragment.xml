@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ScrollViewSize">
+
+        <EditText
+            android:id="@+id/companyName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Company name"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@id/listOfTypes"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/listOfTypes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/companyType"
+            app:layout_constraintBottom_toTopOf="@id/loadImageButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/companyName" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:tag="loadImage"
+            android:name="com.example.panelcreama.buttons.ImageLoadButton"
+            android:padding="5dp"
+            android:id="@+id/loadImageButton"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:text="Load image"
+            app:layout_constraintBottom_toTopOf="@id/logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/listOfTypes" />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/listOfCompanies"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loadImageButton" />
+
+        <Spinner
+            android:id="@+id/listOfCompanies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/socialType"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
