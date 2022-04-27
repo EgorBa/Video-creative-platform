@@ -1,82 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
-    <HorizontalScrollView
-        android:id="@+id/images"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:layout_constraintBottom_toTopOf="@id/descr"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        tools:ignore="ScrollViewSize">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:padding="10dp">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/setting_up_a_video"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/btn1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/btn1"
-                android:name="com.example.panelcreama.buttons.ImageLoadButton"
-                android:layout_width="200dp"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/btn1"
+            android:name="com.example.panelcreama.buttons.ImageLoadButton"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:padding="50dp"
+            android:tag="btn1"
+            app:layout_constraintBottom_toTopOf="@+id/edit1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edit1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_a_image_description"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@id/layout_linear1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn1" />
+
+        <LinearLayout
+            android:id="@+id/layout_linear1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/btn2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit1">
+
+            <ToggleButton
+                android:id="@+id/toggle1"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:tag="btn1"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:textOff="@string/with_bg"
+                android:textOn="@string/out_bg"
+                android:textSize="11sp" />
+
+            <Spinner
+                android:id="@+id/list_of_types_1"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:entries="@array/animationType"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@id/title_logo"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/btn2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/btn2"
-                android:name="com.example.panelcreama.buttons.ImageLoadButton"
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:tag="btn2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/btn1"
-                app:layout_constraintRight_toLeftOf="@id/btn3"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/btn3"
-                android:name="com.example.panelcreama.buttons.ImageLoadButton"
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:tag="btn3"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toRightOf="@id/btn2"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/business_title" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/edit_sale1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="@string/enter_sale"
+                android:inputType="text" />
+        </LinearLayout>
 
-    </HorizontalScrollView>
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/btn2"
+            android:name="com.example.panelcreama.buttons.ImageLoadButton"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:padding="50dp"
+            android:tag="btn2"
+            app:layout_constraintBottom_toTopOf="@+id/edit2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_linear1" />
 
-    <EditText
-        android:id="@+id/descr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Video description"
-        app:layout_constraintBottom_toTopOf="@id/site"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/images" />
+        <EditText
+            android:id="@+id/edit2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_a_image_description"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@id/layout_linear2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn2" />
 
-    <EditText
-        android:id="@+id/site"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Site"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descr" />
+        <LinearLayout
+            android:id="@+id/layout_linear2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@+id/btn3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit2">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ToggleButton
+                android:id="@+id/toggle2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:textOff="@string/with_bg"
+                android:textOn="@string/out_bg"
+                android:textSize="11sp" />
+
+            <Spinner
+                android:id="@+id/list_of_types_2"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:entries="@array/animationType"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@id/title_logo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/business_title" />
+
+            <EditText
+                android:id="@+id/edit_sale2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="@string/enter_sale"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/btn3"
+            android:name="com.example.panelcreama.buttons.ImageLoadButton"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:padding="50dp"
+            android:tag="btn3"
+            app:layout_constraintBottom_toTopOf="@+id/edit3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_linear2" />
+
+        <EditText
+            android:id="@+id/edit3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/enter_a_image_description"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@id/layout_linear3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn3" />
+
+        <LinearLayout
+            android:id="@+id/layout_linear3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit3">
+
+            <ToggleButton
+                android:id="@+id/toggle3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:textOff="@string/with_bg"
+                android:textOn="@string/out_bg"
+                android:textSize="11sp" />
+
+            <Spinner
+                android:id="@+id/list_of_types_3"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight="2"
+                android:entries="@array/animationType"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toTopOf="@id/title_logo"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/business_title" />
+
+            <EditText
+                android:id="@+id/edit_sale3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:hint="@string/enter_sale"
+                android:inputType="text" />
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

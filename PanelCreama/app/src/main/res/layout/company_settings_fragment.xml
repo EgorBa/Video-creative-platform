@@ -3,66 +3,142 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="ScrollViewSize">
 
-        <EditText
-            android:id="@+id/companyName"
+        <TextView
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Company name"
-            android:inputType="text"
-            app:layout_constraintBottom_toTopOf="@id/listOfTypes"
+            android:gravity="center"
+            android:text="@string/setting_up_a_company"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/title_company_name"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/title_company_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/_1_enter_your_company_name"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@id/company_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <EditText
+            android:id="@+id/company_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:hint="@string/enter_your_company_name"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@id/business_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_company_name" />
+
+        <TextView
+            android:id="@+id/business_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/_2_choose_business_category"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@id/listOfTypes"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/company_name" />
+
         <Spinner
             android:id="@+id/listOfTypes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:entries="@array/companyType"
-            app:layout_constraintBottom_toTopOf="@id/loadImageButton"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toTopOf="@id/title_logo"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/companyName" />
+            app:layout_constraintTop_toBottomOf="@id/business_title" />
 
-        <androidx.fragment.app.FragmentContainerView
-            android:tag="loadImage"
-            android:name="com.example.panelcreama.buttons.ImageLoadButton"
-            android:padding="5dp"
-            android:id="@+id/loadImageButton"
+        <TextView
+            android:id="@+id/title_logo"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:text="Load image"
-            app:layout_constraintBottom_toTopOf="@id/logo"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/_3_download_logo_or_enter_a_link_to_your_site"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@id/loadImageButton"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/listOfTypes" />
 
-        <ImageView
-            android:id="@+id/logo"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/loadImageButton"
+            android:name="com.example.panelcreama.buttons.ImageLoadButton"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:padding="50dp"
+            android:tag="loadImage"
+            app:layout_constraintBottom_toTopOf="@id/site"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_logo" />
+
+        <EditText
+            android:id="@+id/site"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/listOfCompanies"
+            android:hint="@string/enter_a_link_to_your_site"
+            android:inputType="text"
+            app:layout_constraintBottom_toTopOf="@id/target_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/loadImageButton" />
 
-        <Spinner
-            android:id="@+id/listOfCompanies"
+        <TextView
+            android:id="@+id/target_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/socialType"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="15dp"
+            android:text="@string/_4_select_advertising_platforms"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@id/targets"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/logo" />
+            app:layout_constraintTop_toBottomOf="@id/site" />
 
+        <com.example.panelcreama.buttons.TargetCompanies
+            android:id="@+id/targets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/target_title" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

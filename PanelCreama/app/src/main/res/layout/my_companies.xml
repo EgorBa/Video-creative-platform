@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Yours companies"
+        android:text="@string/yours_companies"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@id/create"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -19,11 +19,9 @@
 
     <Button
         android:id="@+id/create"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="100dp"
-        android:layout_marginRight="100dp"
-        android:text="add company"
+        android:text="@string/add_company"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title" />

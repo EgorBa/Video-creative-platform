@@ -1,10 +1,17 @@
 <resources>
     <string name="app_name">PanelCreama</string>
+    <string name="try_to_create_video_creative">Try to create video creative</string>
+    <string name="next">Next</string>
+    <string name="logo">logo</string>
+    <string name="setting_up_a_video">Setting up a video</string>
+    <string name="enter_a_image_description">Enter a image description</string>
+    <string name="with_bg">With bg</string>
+    <string name="enter_sale">Enter discount</string>
     <string-array name="companyType">
-        <item>Авто</item>
-        <item>Техника</item>
-        <item>Одежда</item>
-        <item>Еда</item>
+        <item>Auto</item>
+        <item>Technique</item>
+        <item>Clothing</item>
+        <item>Food</item>
     </string-array>
     <string-array name="socialType">
         <item>VK</item>
@@ -12,4 +19,36 @@
         <item>Instagram</item>
         <item>Facebook</item>
     </string-array>
+    <string-array name="animationType">
+        <item>simple</item>
+        <item>by symbol</item>
+        <item>scale</item>
+        <item>wiggle</item>
+<!--        <item>move</item>-->
+    </string-array>
+    <string name="out_bg">Without bg</string>
+    <string name="_1_enter_your_company_name">1. Enter your company name :</string>
+    <string name="enter_your_company_name">Enter your company name</string>
+    <string name="_2_choose_business_category">2. Choose business category :</string>
+    <string name="enter_a_link_to_your_site">Enter a link to your site</string>
+    <string name="_4_select_advertising_platforms">4. Select advertising platforms :</string>
+    <string name="setting_up_a_company">Setting up a company</string>
+    <string name="_3_download_logo_or_enter_a_link_to_your_site">3. Download logo or enter a link to your site :</string>
+    <string name="yours_companies">Yours companies</string>
+    <string name="add_company">Add company</string>
+    <string name="your_profile">Your profile</string>
+    <string name="confirm">Confirm</string>
+    <string name="change_language">The language has been changed, for the changes to take effect, restart the application</string>
+    <string name="check_logo">Please, download logo</string>
+    <string name="download">Download</string>
+    <string name="video_download">Video downloaded</string>
+    <string name="login_title">Please, sign in</string>
+    <string name="sign_in_up">Sign in/up</string>
+    <string name="enter_username">Enter username</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="enter_password">Enter password</string>
+    <string name="sign_in_up_success">Sign in/up success</string>
+    <string name="similar_password_error">User with this name has another password</string>
+    <string name="empty_error">Username or Password can`t be empty</string>
 </resources>

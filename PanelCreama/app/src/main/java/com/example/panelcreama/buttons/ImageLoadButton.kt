@@ -3,11 +3,11 @@ package com.example.panelcreama.buttons
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,16 +16,18 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.example.panelcreama.R
-import com.example.panelcreama.VideoCreativeFragment
+import java.io.InputStream
 
-class ImageLoadButton: Fragment() {
+class ImageLoadButton : Fragment() {
 
-    lateinit var text: TextView
+    lateinit var background: LinearLayout
         private set
     lateinit var image: ImageView
         private set
     lateinit var close: TextView
         private set
+    private var curBitmap: Bitmap? = null
+    private var curString: String = ""
 
     companion object {
         fun newInstance(): ImageLoadButton {
@@ -39,12 +41,14 @@ class ImageLoadButton: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.image_button, container, false)
-        text = view.findViewById(R.id.text)
+        background = view.findViewById(R.id.bg)
         image = view.findViewById(R.id.image)
         close = view.findViewById(R.id.close)
         close.setOnClickListener {
             image.setImageBitmap(null)
-            text.isVisible = true
+            curBitmap = null
+            curString = ""
+            background.isVisible = true
             close.isVisible = false
         }
         val observer = MyLifecycleObserver(this, this)
@@ -65,10 +69,21 @@ class ImageLoadButton: Fragment() {
 
         override fun onCreate(owner: LifecycleOwner) {
             getContent =
-                fragment.requireActivity().activityResultRegistry.register(fragment.tag.toString(), owner, ActivityResultContracts.GetContent()) { uri ->
-                    val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(fragment.context?.contentResolver, uri)
-                    imageLoadButton.image.setImageBitmap(bitmap)
-                    imageLoadButton.text.isVisible = false
+                fragment.requireActivity().activityResultRegistry.register(
+                    fragment.tag.toString(),
+                    owner,
+                    ActivityResultContracts.GetContent()
+                ) { uri ->
+                    if (uri == null) return@register
+                    imageLoadButton.curBitmap =
+                        MediaStore.Images.Media.getBitmap(fragment.context?.contentResolver, uri)
+                    val inputStream: InputStream? =
+                        fragment.context?.contentResolver?.openInputStream(uri)
+                    imageLoadButton.curString = inputStream?.let {
+                        String(inputStream.readBytes(), charset("ISO-8859-1"))
+                    } ?: ""
+                    imageLoadButton.image.setImageBitmap(imageLoadButton.curBitmap)
+                    imageLoadButton.background.isVisible = false
                     imageLoadButton.close.isVisible = true
                 }
         }
@@ -77,5 +92,7 @@ class ImageLoadButton: Fragment() {
             getContent.launch("image/*")
         }
     }
+
+    fun getString(): String = curString
 
 }

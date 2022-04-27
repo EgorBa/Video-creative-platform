@@ -6,9 +6,11 @@
         android:width="2dp"
         android:dashGap="6dp"
         android:dashWidth="8dp"
-        android:color="@color/black" />
+        android:color="@color/rose" />
 
     <padding
-        android:bottom="0.5dp"
-        android:top="0.5dp" />
+        android:bottom="2dp"
+        android:right="2dp"
+        android:left="2dp"
+        android:top="2dp" />
 </shape>

@@ -29,7 +29,14 @@ class MyCompanies : Fragment() {
         create.setOnClickListener {
             listener?.invoke()
         }
+        updateButton()
         return view
+    }
+
+    fun updateButton() {
+        create.text = resources.getString(
+            if (MainActivity.username.isBlank()) R.string.login_title else R.string.add_company
+        )
     }
 
     fun setListener(listener: (() -> Unit)) {
