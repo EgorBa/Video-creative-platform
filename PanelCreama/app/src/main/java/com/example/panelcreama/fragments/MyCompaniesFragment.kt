@@ -1,4 +1,4 @@
-package com.example.panelcreama
+package com.example.panelcreama.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,13 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import com.example.panelcreama.MainActivity
+import com.example.panelcreama.R
 
-class MyCompanies : Fragment() {
+class MyCompaniesFragment : Fragment() {
 
     companion object {
         const val TAG = "my_companies"
-        fun newInstance(): MyCompanies {
-            return MyCompanies()
+        fun newInstance(): MyCompaniesFragment {
+            return MyCompaniesFragment()
         }
     }
 

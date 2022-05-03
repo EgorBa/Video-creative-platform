@@ -51,4 +51,12 @@
     <string name="sign_in_up_success">Sign in/up success</string>
     <string name="similar_password_error">User with this name has another password</string>
     <string name="empty_error">Username or Password can`t be empty</string>
+    <string name="start_extracting_colors">Start extracting colors</string>
+    <string name="colors_extracted">Colors extracted</string>
+    <string name="colors_extracting_error">Some problems with extracting colors</string>
+    <string name="part_generated">Part of creative is generated</string>
+    <string name="part_generating_wait">Generating a part of creative, please wait</string>
+    <string name="generating_creative">Generating creative</string>
+    <string name="creative_generated">Creative is generated</string>
+    <string name="creative_generating_wait">Generating creative, please wait</string>
 </resources>

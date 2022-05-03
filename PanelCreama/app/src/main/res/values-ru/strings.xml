@@ -1,0 +1,62 @@
+<resources>
+    <string name="app_name">PanelCreama</string>
+    <string-array name="companyType">
+        <item>Авто</item>
+        <item>Техника</item>
+        <item>Одежда</item>
+        <item>Еда</item>
+    </string-array>
+    <string-array name="socialType">
+        <item>VK</item>
+        <item>YouTube</item>
+        <item>Instagram</item>
+        <item>Facebook</item>
+    </string-array>
+    <string-array name="animationType">
+        <item>без анимации</item>
+        <item>посимвольно</item>
+        <item>приближение</item>
+        <item>покачивание</item>
+<!--        <item>перемещение</item>-->
+    </string-array>
+    <string name="try_to_create_video_creative">Попробуйте создать креатив</string>
+    <string name="next">Дальше</string>
+    <string name="logo">лого</string>
+    <string name="setting_up_a_video">Настройка видео</string>
+    <string name="enter_a_image_description">Введите описание картинки</string>
+    <string name="with_bg">С фоном</string>
+    <string name="out_bg">Без фона</string>
+    <string name="enter_sale">Введите скидку</string>
+    <string name="setting_up_a_company">Настройка компании</string>
+    <string name="_1_enter_your_company_name">1. Введите название компании:</string>
+    <string name="enter_your_company_name">Введите название компании</string>
+    <string name="_2_choose_business_category">2. Виберите категорию бизнеса:</string>
+    <string name="_3_download_logo_or_enter_a_link_to_your_site">3. Загрузите логотип или введите ссылку на сайт:</string>
+    <string name="enter_a_link_to_your_site">Введите ссылку на сайт</string>
+    <string name="_4_select_advertising_platforms">4. Виберите платформы продвижения:</string>
+    <string name="yours_companies">Ваши компании</string>
+    <string name="add_company">Добавить компанию</string>
+    <string name="your_profile">Ваш профиль</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="change_language">Язык был поменян, чтобы изменения вступили в силу, перезагрузите приложение</string>
+    <string name="check_logo">Пожалуйста, загрузите логотип</string>
+    <string name="download">Загрузить</string>
+    <string name="video_download">Видео скачено</string>
+    <string name="login_title">Пожалуйста, зарегестрируйтесь</string>
+    <string name="sign_in_up">Вход/Регистрация</string>
+    <string name="enter_username">Введите имя пользователя</string>
+    <string name="username">Имя пользователя</string>
+    <string name="password">Пароль</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="sign_in_up_success">Вход/Регистрация прошла успешно</string>
+    <string name="empty_error">Имя пользователия и Пароль не быть пустыми</string>
+    <string name="similar_password_error">Пользватель с таким именем имеет другой пароль</string>
+    <string name="start_extracting_colors">Начато извлечение цветов</string>
+    <string name="colors_extracted">Цвета извлечены</string>
+    <string name="colors_extracting_error">Небольшие проблемы при извлечении цветов</string>
+    <string name="part_generated">Часть креатива сгенерирована</string>
+    <string name="part_generating_wait">Часть креатива генерируется, подождите</string>
+    <string name="generating_creative">Генерация креатива</string>
+    <string name="creative_generated">Креатив сгенерирован</string>
+    <string name="creative_generating_wait">Идет генерация креатива, подождите</string>
+</resources>

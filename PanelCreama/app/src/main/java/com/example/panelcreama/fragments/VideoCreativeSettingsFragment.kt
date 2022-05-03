@@ -1,26 +1,23 @@
-package com.example.panelcreama
+package com.example.panelcreama.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.ToggleButton
-import android.widget.VideoView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.panelcreama.R
 import com.example.panelcreama.buttons.ImageLoadButton
 
-class VideoCreativeFragment : Fragment() {
+class VideoCreativeSettingsFragment : Fragment() {
 
     companion object {
         const val TAG = "video_creator"
-        fun newInstance(): VideoCreativeFragment {
-            return VideoCreativeFragment()
+        fun newInstance(): VideoCreativeSettingsFragment {
+            return VideoCreativeSettingsFragment()
         }
     }
 

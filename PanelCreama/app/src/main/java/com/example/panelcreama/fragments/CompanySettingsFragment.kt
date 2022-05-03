@@ -1,4 +1,4 @@
-package com.example.panelcreama
+package com.example.panelcreama.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import com.example.panelcreama.R
 import com.example.panelcreama.buttons.ImageLoadButton
 
 class CompanySettingsFragment : Fragment() {

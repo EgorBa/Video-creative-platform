@@ -132,7 +132,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/site" />
 
-        <com.example.panelcreama.buttons.TargetCompanies
+        <com.example.panelcreama.buttons.TargetCompaniesButton
             android:id="@+id/targets"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
