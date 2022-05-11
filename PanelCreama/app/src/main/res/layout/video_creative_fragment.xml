@@ -53,7 +53,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/btn2"
+            app:layout_constraintBottom_toTopOf="@+id/emotion_title1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit1">
@@ -90,6 +90,32 @@
                 android:inputType="text" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/emotion_title1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/emotion_title"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/btn2"
+            app:layout_constraintHorizontal_weight="6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/emotion_checkbox1"
+            app:layout_constraintTop_toBottomOf="@id/layout_linear1" />
+
+        <CheckBox
+            android:id="@+id/emotion_checkbox1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/btn2"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/emotion_title1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_linear1" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/btn2"
             android:name="com.example.panelcreama.buttons.ImageLoadButton"
@@ -100,7 +126,7 @@
             app:layout_constraintBottom_toTopOf="@+id/edit2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_linear1" />
+            app:layout_constraintTop_toBottomOf="@+id/emotion_title1" />
 
         <EditText
             android:id="@+id/edit2"
@@ -118,7 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/btn3"
+            app:layout_constraintBottom_toTopOf="@+id/emotion_title2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit2">
@@ -155,6 +181,32 @@
                 android:inputType="text" />
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/emotion_title2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/emotion_title"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@id/btn3"
+            app:layout_constraintHorizontal_weight="6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/emotion_checkbox2"
+            app:layout_constraintTop_toBottomOf="@id/layout_linear2" />
+
+        <CheckBox
+            android:id="@+id/emotion_checkbox2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/btn3"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/emotion_title2"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_linear2" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/btn3"
             android:name="com.example.panelcreama.buttons.ImageLoadButton"
@@ -165,7 +217,7 @@
             app:layout_constraintBottom_toTopOf="@+id/edit3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_linear2" />
+            app:layout_constraintTop_toBottomOf="@+id/emotion_title2" />
 
         <EditText
             android:id="@+id/edit3"
@@ -183,7 +235,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/emotion_title3"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit3">
@@ -219,6 +271,32 @@
                 android:hint="@string/enter_sale"
                 android:inputType="text" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/emotion_title3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="@string/emotion_title"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="6"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/emotion_checkbox3"
+            app:layout_constraintTop_toBottomOf="@id/layout_linear3" />
+
+        <CheckBox
+            android:id="@+id/emotion_checkbox3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/emotion_title3"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_linear3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

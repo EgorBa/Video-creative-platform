@@ -59,4 +59,6 @@
     <string name="generating_creative">Generating creative</string>
     <string name="creative_generated">Creative is generated</string>
     <string name="creative_generating_wait">Generating creative, please wait</string>
+    <string name="emotion_title">Add an emotion to a video creative without an image</string>
+    <string name="info_emotion">Emotions can only be added if there is no picture</string>
 </resources>

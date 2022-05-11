@@ -1,12 +1,12 @@
 package com.example.panelcreama.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.ToggleButton
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
 import com.example.panelcreama.R
@@ -36,6 +36,9 @@ class VideoCreativeSettingsFragment : Fragment() {
     private lateinit var saleEdit1: EditText
     private lateinit var saleEdit2: EditText
     private lateinit var saleEdit3: EditText
+    private lateinit var checkbox1: CheckBox
+    private lateinit var checkbox2: CheckBox
+    private lateinit var checkbox3: CheckBox
     private val mapTranslate: Map<String, String> = mapOf(
         "без анимации" to "simple",
         "посимвольно" to "by symbol",
@@ -65,7 +68,19 @@ class VideoCreativeSettingsFragment : Fragment() {
         saleEdit1 = view.findViewById(R.id.edit_sale1)
         saleEdit2 = view.findViewById(R.id.edit_sale2)
         saleEdit3 = view.findViewById(R.id.edit_sale3)
+        checkbox1 = view.findViewById(R.id.emotion_checkbox1)
+        checkbox2 = view.findViewById(R.id.emotion_checkbox2)
+        checkbox3 = view.findViewById(R.id.emotion_checkbox3)
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val listOfCheckboxes = listOf(checkbox1, checkbox2, checkbox3)
+        val listOfImageLoadButtons = listOf(imageLoadButton1, imageLoadButton2, imageLoadButton3)
+        for (i in listOfCheckboxes.indices) {
+            addListener(listOfImageLoadButtons[i], listOfCheckboxes[i])
+        }
     }
 
     fun getImage1String(): String =
@@ -90,6 +105,41 @@ class VideoCreativeSettingsFragment : Fragment() {
     fun getSale1String(): String = saleEdit1.text.toString()
     fun getSale2String(): String = saleEdit2.text.toString()
     fun getSale3String(): String = saleEdit3.text.toString()
+
+    fun getEmotion1Value(): Boolean = checkbox1.isChecked
+    fun getEmotion2Value(): Boolean = checkbox2.isChecked
+    fun getEmotion3Value(): Boolean = checkbox3.isChecked
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun addListener(imageLoadButton: View, checkbox: CheckBox) {
+        val fragment = (imageLoadButton as FragmentContainerView).getFragment<ImageLoadButton>()
+        checkbox.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (!checkbox.isClickable) {
+                    makeToast(resources.getString(R.string.info_emotion))
+                } else {
+                    checkbox.isChecked = !checkbox.isChecked
+                }
+            }
+            true
+        }
+        fragment.setSuccessCallback {
+            checkbox.isChecked = false
+            checkbox.isClickable = false
+        }
+        fragment.setDeleteCallback {
+            checkbox.isClickable = true
+        }
+    }
+
+    private fun makeToast(text: String) {
+        val toast = Toast.makeText(
+            context,
+            text,
+            Toast.LENGTH_SHORT
+        )
+        toast.show()
+    }
 
     private fun getSpinnerValue(str: String): String = mapTranslate[str] ?: str
 }

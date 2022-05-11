@@ -59,4 +59,6 @@
     <string name="generating_creative">Генерация креатива</string>
     <string name="creative_generated">Креатив сгенерирован</string>
     <string name="creative_generating_wait">Идет генерация креатива, подождите</string>
+    <string name="emotion_title">Добавить на видео-креатив без изображения рекомендованную эмоцию</string>
+    <string name="info_emotion">Эмоции можно добавить только в том случае, если нет картинки</string>
 </resources>

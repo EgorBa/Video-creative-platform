@@ -28,6 +28,8 @@ class ImageLoadButton : Fragment() {
         private set
     private var curBitmap: Bitmap? = null
     private var curString: String = ""
+    private var onSuccess: (()->Unit)? = null
+    private var onDelete: (()->Unit)? = null
 
     companion object {
         fun newInstance(): ImageLoadButton {
@@ -50,6 +52,7 @@ class ImageLoadButton : Fragment() {
             curString = ""
             background.isVisible = true
             close.isVisible = false
+            onDelete?.invoke()
         }
         val observer = MyLifecycleObserver(this, this)
         lifecycle.addObserver(observer)
@@ -85,6 +88,7 @@ class ImageLoadButton : Fragment() {
                     imageLoadButton.image.setImageBitmap(imageLoadButton.curBitmap)
                     imageLoadButton.background.isVisible = false
                     imageLoadButton.close.isVisible = true
+                    imageLoadButton.onSuccess?.invoke()
                 }
         }
 
@@ -94,5 +98,13 @@ class ImageLoadButton : Fragment() {
     }
 
     fun getString(): String = curString
+
+    fun setSuccessCallback(listener: (() -> Unit)) {
+        onSuccess = listener
+    }
+
+    fun setDeleteCallback(listener: (() -> Unit)) {
+        onDelete = listener
+    }
 
 }

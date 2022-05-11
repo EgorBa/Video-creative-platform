@@ -117,7 +117,8 @@ class NetworkController(
             videoCreateSettingsFragment.getToggle1Value(),
             videoCreateSettingsFragment.getSale1String(),
             videoCreateSettingsFragment.getImage1String(),
-            videoCreateSettingsFragment.getDescr1String()
+            videoCreateSettingsFragment.getDescr1String(),
+            useEmotion = videoCreateSettingsFragment.getEmotion1Value()
         )
         addImageToDB(
             id1,
@@ -125,7 +126,8 @@ class NetworkController(
             videoCreateSettingsFragment.getToggle2Value(),
             videoCreateSettingsFragment.getSale2String(),
             videoCreateSettingsFragment.getImage2String(),
-            videoCreateSettingsFragment.getDescr2String()
+            videoCreateSettingsFragment.getDescr2String(),
+            useEmotion = videoCreateSettingsFragment.getEmotion2Value()
         )
         addImageToDB(
             id2,
@@ -133,7 +135,8 @@ class NetworkController(
             videoCreateSettingsFragment.getToggle3Value(),
             videoCreateSettingsFragment.getSale3String(),
             videoCreateSettingsFragment.getImage3String(),
-            videoCreateSettingsFragment.getDescr3String()
+            videoCreateSettingsFragment.getDescr3String(),
+            useEmotion = videoCreateSettingsFragment.getEmotion3Value()
         )
         addImageToDB(
             id3,
@@ -154,7 +157,8 @@ class NetworkController(
         sale: String,
         image: String,
         descr: String,
-        useTextType: Boolean = false
+        useTextType: Boolean = false,
+        useEmotion: Boolean = false
     ) {
         orderListIds.add(id)
         database.child("images").child(id.toString()).child("image").setValue(image)
@@ -164,7 +168,7 @@ class NetworkController(
                         if (image == "" && descr == "") {
                             checkListIds.add(id)
                         }
-                        sendGenerateVideo(id, animationType, clearBg, sale, useTextType)
+                        sendGenerateVideo(id, animationType, clearBg, sale, useTextType, useEmotion)
                     }
             }
     }
@@ -174,7 +178,8 @@ class NetworkController(
         animationType: String,
         clearBg: Boolean,
         sale: String,
-        useTypeText: Boolean
+        useTypeText: Boolean,
+        useEmotion: Boolean
     ) {
         database.child("videos").child(id.toString()).child("video")
             .addValueEventListener(object : ValueEventListener {
@@ -197,7 +202,7 @@ class NetworkController(
                     colors,
                     "UTF-8"
                 )
-            }&animation_type=$animationType&clear_bg=$clearBg&sale=$sale"
+            }&animation_type=$animationType&clear_bg=$clearBg&sale=$sale&use_emotion=$useEmotion"
         val stringRequest = StringRequest(
             Request.Method.GET,
             url,
