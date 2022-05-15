@@ -19,7 +19,6 @@ def embed_bert_cls(text, model, tokenizer):
 
 
 def get_emotion(text):
-    print(os.listdir())
     xl = pd.ExcelFile("faces_labels.xlsx").parse("Лист1").to_numpy()
     x = embed_bert_cls(text, model, tokenizer)
     min_norm = (1, 100000)
@@ -36,5 +35,5 @@ def get_emotion(text):
 
 def get_emotion_path(text):
     (index, _) = get_emotion(text)
-    return "NLP/faces/" + str(index) + ".png"
+    return "faces/" + str(index) + ".png"
 
