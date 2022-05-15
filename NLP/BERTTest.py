@@ -79,11 +79,11 @@ y4 = H
 texts = ["Крутые кроссовки", "Классная сковорода", "Хорошие врачи",
          "Высокое качество", "Счастливые дети", "Молодые учителя", "Большие скидки"
          ]
-
+count = 1
 for text in texts:
     background = Image.new('RGB', frameSize, rgb_colors)
     path_to_image = get_emotion_path(text)
-    out_image_path = "examples/" + text + ".png"
+    out_image_path = "examples/" + str(count) + ".png"
     image = Image.open(path_to_image)
     (w, h) = image.size
     (w, h) = find_image_size(w, h, x4 - x3, y4 - y3)
@@ -95,3 +95,4 @@ for text in texts:
     (w, h) = text_size(text, font)
     draw.text((int((x1 + x2 - w) / 2), int((y1 + y2 - h) / 2)), text, font=font, fill=new_rgb_colors)
     background.save(out_image_path, format="png")
+    count += 1
